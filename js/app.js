@@ -1,3 +1,5 @@
+
+
 /*
  * Create a list that holds all of your cards
  */
@@ -12,7 +14,7 @@
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -25,6 +27,39 @@ function shuffle(array) {
     return array;
 }
 
+let card = document.querySelectorAll('li.card');
+
+for (i = 0; i < card.length; i++) {
+	card[i].addEventListener('click', function () {
+		let flippedCard = this.classList.add('open', 'show');
+		addToArr();
+	});
+}
+
+function addToArr() {
+	matchingTestArr.push('flippedCard');
+}
+
+let matchingTestArr = [];
+
+let firstCard = matchingTestArr[0].querySelector('i').classList;
+let secondCard = matchingTestArr[1].querySelector('i').classList;
+
+
+/*
+var cardOne = matchingTestArr[0].querySelector('i');
+var cardTwo = matchingTestArr[1].querySelector('i');
+
+function matchingTest () {
+	if (card1 === card2) {
+		card1.add('match');
+		card2.add('match');
+	} else {
+		card1.remove('open', 'show');
+		card2.remove('open', 'show');
+	}
+}
+*/
 
 /*
  * set up the event listener for a card. If a card is clicked:
