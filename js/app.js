@@ -27,24 +27,88 @@ function shuffle(array) {
     return array;
 }
 
+let robbie = [];
 let card = document.querySelectorAll('li.card');
 
 for (i = 0; i < card.length; i++) {
-	card[i].addEventListener('click', function () {
-		let flippedCard = this.classList.add('open', 'show');
+	card[i].addEventListener('click', function() {
+		robbie.push(this);
+		testArr();
+	});
+}
+	
+function testArr() {
+if (robbie.length === 1) {
+	flipCardOne();
+} else if (robbie.length === 2) {
+		flipCardTwo();
+		compareCards();
+	} else if (robbie.length > 3) {
+		robbie.splice(2);
+	}
+}
+	
+function flipCardOne() {
+	robbie[0].classList.add('open', 'show');
+}
+
+function flipCardTwo() {
+	robbie[1].classList.add('open', 'show');
+}
+
+function compareCards() {
+	
+}
+
+	
+	
+	
+//card[4].querySelector('i').classList.value
+
+
+/*
+//add event listener and 'flip' cards
+let card = document.querySelectorAll('li.card');
+let flippedCard = '';
+
+for (i = 0; i < card.length; i++) {
+	card[i].addEventListener('click', function() {
+		let clickedCard = this;
+		clickedCard.classList.add('open', 'show')
+		flippedCard += clickedCard.querySelector('i').value;
 		addToArr();
 	});
 }
 
+//add flipped cards to array
 function addToArr() {
-	matchingTestArr.push('flippedCard');
+	matchingTestArr.push(flippedCard);
+	//convert();
 }
 
 let matchingTestArr = [];
+*/
 
-let firstCard = matchingTestArr[0].querySelector('i').classList;
-let secondCard = matchingTestArr[1].querySelector('i').classList;
 
+/*
+function convert() {
+	let test = matchingTestArr[0]
+	console.log(test.classList);
+}
+*/
+	
+/*
+// grab class names on <i> element
+function listClassNames () {
+let cardOne = matchingTestArr[0];
+let cardTwo = matchingTestArr[1];
+console.log(cardOne.firstChild);
+}
+*/
+	
+//compare class names. If true, add 'match' class to element.
+//if false, remove class 'open' and 'show' from <li> element.
+//remove both items from array.
 
 /*
 var cardOne = matchingTestArr[0].querySelector('i');
