@@ -24,14 +24,20 @@
  **************************************************/
 
 let matchingArr = [];
+let shuffleArr = [];
 let card = document.querySelectorAll('li.card');
+let reset = document.querySelector('i.fa-repeat');
+
+document.addEventListener('DOMContentLoaded', addEvent);
 
 //adds eventlistener to every  card, pushes to array.
+function addEvent() {
 for (i = 0; i < card.length; i++) {
 	card[i].addEventListener('click', function() {
 		matchingArr.push(this);
 		testArr();
 	});
+}
 }
 
 //checks array to see if index 0 and 1 are full.
@@ -43,7 +49,7 @@ if (matchingArr.length === 1) {
 } else if (matchingArr.length === 2) {
 		flipCardTwo();
 	} else if (matchingArr.length > 2) {
-		robbie.splice(2);
+		matchingArr.splice(2);
 	}
 }
 //'flips' card by adding class 'open' and 'show' to card1	
@@ -72,6 +78,8 @@ function compareCards() {
 function matchTrue() {
 	matchingArr[0].classList.add('match');
 	matchingArr[1].classList.add('match');
+	matchingArr[0].classList.remove('open', 'show', 'hvr-grw-rotate');
+	matchingArr[1].classList.remove('open', 'show', 'hvr-grw-rotate');
 	matchingArr.splice(0);
 }
 
@@ -83,19 +91,44 @@ function matchFalse() {
 }
 
 
+/*************************************
+ **********RESET AND SHUFFLE**********
+ *************************************/
+
+for (i = 0; i < card.length; i++) {
+	shuffleArr.push(this);
+}
+
+//adds event listener to reset button. 
+//removes all added classes
+reset.addEventListener('click', function() {
+	for (i = 0; i < card.length; i++) {
+		card[i].classList.remove('match', 'open', 'show', 'disabled')
+	}
+	//removes event listener so first event 
+	//	listener can be added back on
+	reset.removeEventListener('click', function() {
+	for (i = 0; i < card.length; i++) {
+		card[i].classList.remove('match', 'open', 'show', 'disabled')
+	}
+	addEvent();
+	shuffle(shuffleArr);
+	});
+});
+
 // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
+function shuffle(shuffleArr) {
+    let currentIndex = shuffleArr.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+        temporaryValue = shuffleArr[currentIndex];
+        shuffleArr[currentIndex] = shuffleArr[randomIndex];
+        shuffleArr[randomIndex] = temporaryValue;
     }
 
-    return array;
+    return shuffleArr;
 }
 
 //card[4].querySelector('i').classList.value
