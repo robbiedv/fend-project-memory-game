@@ -1,4 +1,9 @@
-
+/**********BUGS**********
+ * second card clicked does not flip
+ *
+ *
+ *
+ */
 
 /*
  * Create a list that holds all of your cards
@@ -11,6 +16,72 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+
+
+/**************************************************
+ **********FLIPS CARDS & CHECKS FOR MATCH**********
+ **************************************************/
+
+let matchingArr = [];
+let card = document.querySelectorAll('li.card');
+
+//adds eventlistener to every  card, pushes to array.
+for (i = 0; i < card.length; i++) {
+	card[i].addEventListener('click', function() {
+		matchingArr.push(this);
+		testArr();
+	});
+}
+
+//checks array to see if index 0 and 1 are full.
+//if true, calls function to 'flip' cards.
+//last statement prevents more than 2 objects in array.
+function testArr() {
+if (matchingArr.length === 1) {
+	flipCardOne();
+} else if (matchingArr.length === 2) {
+		flipCardTwo();
+	} else if (matchingArr.length > 2) {
+		robbie.splice(2);
+	}
+}
+//'flips' card by adding class 'open' and 'show' to card1	
+function flipCardOne() {
+	matchingArr[0].classList.add('open', 'show', 'disabled', 'hvr-grw-rotate');
+}
+	
+//'flips' card by adding class 'open' and 'show' to card2
+function flipCardTwo() {
+	matchingArr[1].classList.add('open', 'show', 'disabled', 'hvr-grw-rotate');
+	compareCards();
+}
+
+//compares card1 and card2
+function compareCards() {
+	let card1 = matchingArr[0].querySelector('i').classList.value;
+	let card2 = matchingArr[1].querySelector('i').classList.value;
+	if (card1 === card2) {
+		matchTrue();
+	} else if (card1 != card2) {
+		setTimeout(matchFalse, 1000);
+	}	
+}
+
+//matches cards, clears array
+function matchTrue() {
+	matchingArr[0].classList.add('match');
+	matchingArr[1].classList.add('match');
+	matchingArr.splice(0);
+}
+
+//flips cards back over, clears array
+function matchFalse() {
+	matchingArr[0].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
+	matchingArr[1].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
+	matchingArr.splice(0);
+}
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -27,42 +98,6 @@ function shuffle(array) {
     return array;
 }
 
-let robbie = [];
-let card = document.querySelectorAll('li.card');
-
-for (i = 0; i < card.length; i++) {
-	card[i].addEventListener('click', function() {
-		robbie.push(this);
-		testArr();
-	});
-}
-	
-function testArr() {
-if (robbie.length === 1) {
-	flipCardOne();
-} else if (robbie.length === 2) {
-		flipCardTwo();
-		compareCards();
-	} else if (robbie.length > 3) {
-		robbie.splice(2);
-	}
-}
-	
-function flipCardOne() {
-	robbie[0].classList.add('open', 'show');
-}
-
-function flipCardTwo() {
-	robbie[1].classList.add('open', 'show');
-}
-
-function compareCards() {
-	
-}
-
-	
-	
-	
 //card[4].querySelector('i').classList.value
 
 
