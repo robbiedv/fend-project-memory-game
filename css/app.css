@@ -33,9 +33,9 @@ h1 {
     font-weight: 300;
 }
 
-/*
- * Styles for the deck of cards
- */
+/************************************************
+ **********Styles for the deck of cards**********
+ ************************************************/
 
 .deck {
     width: 660px;
@@ -102,9 +102,9 @@ h1 {
 }
 
 
-/*
- * Styles for the Score Panel
- */
+/**********************************************
+ **********Styles for the Score Panel**********
+ **********************************************/
 
 .score-panel {
     text-align: left;
@@ -127,4 +127,45 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+/************************************
+ ***********Styles for Modal*********
+ ************************************/
+
+.modal {
+	display: none; 
+  	position: fixed;
+  	z-index: 1; /* Sit on top */
+ 	padding-top: 200px; 	  
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+	background-color: #d3dbe8;
+  	margin: auto;
+  	padding: 20px;
+    text-align: center;
+	font-size: 1.5em;
+  	width: 65%;
+}
+
+.stars-earned li {
+	list-style: none;
+	display: inline-block;
+	padding: 0;
+}
+
+.stars-total li {
+	list-style: none;
+	display: inline-block;
+	padding: 0;
+  	margin: 0;
+  		
 }
