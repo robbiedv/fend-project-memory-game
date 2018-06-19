@@ -25,10 +25,8 @@
 
 let matchingTestArr = [];
 let matchedArr = [];
-let shuffleArr = [];
 let card = document.querySelectorAll('li.card');
-let reset = document.querySelector('i.fa-repeat');
-
+const deck = document.querySelector('.deck')
 document.addEventListener('DOMContentLoaded', addEvent);
 
 //adds eventlistener to every  card, pushes to array.
@@ -84,6 +82,7 @@ function matchTrue() {
 	matchedArr.push(matchingTestArr[0])
 	matchedArr.push(matchingTestArr[1])
 	matchingTestArr.splice(0);
+	//Once all cards are matched, run the function to show modal
 	if (matchedArr.length === 16) {
 		showModal();
 	}
@@ -101,7 +100,6 @@ function matchFalse() {
  ****************************/
 
 let won = document.querySelector('div.modal');
-let wonDisplay = won.style.display;
 
 function showModal() {
 	won.style.display = 'block';
@@ -125,38 +123,49 @@ function hideModal() {
  **********RESET AND SHUFFLE**********
  *************************************/
 
-for (i = 0; i < card.length; i++) {
-	shuffleArr.push(this);
+const reset = document.querySelector('i.fa-repeat');
+
+//runs functions to reset game when reset button is clicked
+reset.onclick = function() {
+	resetGame();
 }
 
-//adds event listener to reset button. 
-//removes all added classes
-reset.addEventListener('click', function() {
-	for (i = 0; i < card.length; i++) {
-		card[i].classList.remove('match', 'open', 'show', 'disabled')
+function resetGame() {
+	matchingTestArr.splice(0); //empties array
+	shuffleDeck(); 
+	matchedArr.splice(0); //empties array
 	}
-	resetArr();
-});
 
-function resetArr() {
-	matchingTestArr.splice(0);
-	//shuffle();
-	matchedArr.splice(0);
+/* creates an array and stores in shuffleArr
+ * passes shuffleArr into shuffle function and stores result in shuffledDeck
+ * appends shuffled deck to variable card
+ */
+function shuffleDeck() {
+	const shuffleArr = Array.from(document.querySelectorAll('.deck li'));
+	const shuffledDeck = shuffle(shuffleArr);
+	for (card of shuffledDeck) {
+		deck.appendChild(card);
 	}
+	//flips cards back over to starting position
+	for(i = 0; i < shuffleArr.length; i++) {
+		shuffleArr[i].classList.remove('match', 'open', 'show', 'disabled');
+	}
+}
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(matchedArr) {
-    let currentIndex = matchedArr.length, temporaryValue, randomIndex;
+function shuffle(shuffleArr) {
+    let currentIndex = shuffleArr.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-        temporaryValue = matchedArr[currentIndex];
-        matchedArr[currentIndex] = matchedArr[randomIndex];
-        matchedArr[randomIndex] = temporaryValue;
+        temporaryValue = shuffleArr[currentIndex];
+        shuffleArr[currentIndex] = shuffleArr[randomIndex];
+        shuffleArr[randomIndex] = temporaryValue;
     }
 
-    return matchedArr;
+    return shuffleArr;
 }
 
 //card[4].querySelector('i').classList.value
