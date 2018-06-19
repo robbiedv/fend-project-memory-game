@@ -23,7 +23,8 @@
  **********FLIPS CARDS & CHECKS FOR MATCH**********
  **************************************************/
 
-let matchingArr = [];
+let matchingTestArr = [];
+let matchedArr = [];
 let shuffleArr = [];
 let card = document.querySelectorAll('li.card');
 let reset = document.querySelector('i.fa-repeat');
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', addEvent);
 function addEvent() {
 for (i = 0; i < card.length; i++) {
 	card[i].addEventListener('click', function() {
-		matchingArr.push(this);
+		matchingTestArr.push(this);
 		testArr();
 	});
 }
@@ -44,29 +45,29 @@ for (i = 0; i < card.length; i++) {
 //if true, calls function to 'flip' cards.
 //last statement prevents more than 2 objects in array.
 function testArr() {
-if (matchingArr.length === 1) {
+if (matchingTestArr.length === 1) {
 	flipCardOne();
-} else if (matchingArr.length === 2) {
+} else if (matchingTestArr.length === 2) {
 		flipCardTwo();
-	} else if (matchingArr.length > 2) {
-		matchingArr.splice(2);
+	} else if (matchingTestArr.length > 2) {
+		matchingTestArr.splice(2);
 	}
 }
 //'flips' card by adding class 'open' and 'show' to card1	
 function flipCardOne() {
-	matchingArr[0].classList.add('open', 'show', 'disabled', 'hvr-grw-rotate');
+	matchingTestArr[0].classList.add('open', 'show', 'disabled', 'hvr-grw-rotate');
 }
 	
 //'flips' card by adding class 'open' and 'show' to card2
 function flipCardTwo() {
-	matchingArr[1].classList.add('open', 'show', 'disabled', 'hvr-grw-rotate');
+	matchingTestArr[1].classList.add('open', 'show', 'disabled', 'hvr-grw-rotate');
 	compareCards();
 }
 
 //compares card1 and card2
 function compareCards() {
-	let card1 = matchingArr[0].querySelector('i').classList.value;
-	let card2 = matchingArr[1].querySelector('i').classList.value;
+	let card1 = matchingTestArr[0].querySelector('i').classList.value;
+	let card2 = matchingTestArr[1].querySelector('i').classList.value;
 	if (card1 === card2) {
 		matchTrue();
 	} else if (card1 != card2) {
@@ -74,20 +75,49 @@ function compareCards() {
 	}	
 }
 
-//matches cards, clears array
+//matches cards, clears array, checks for game won.
 function matchTrue() {
-	matchingArr[0].classList.add('match');
-	matchingArr[1].classList.add('match');
-	matchingArr[0].classList.remove('open', 'show', 'hvr-grw-rotate');
-	matchingArr[1].classList.remove('open', 'show', 'hvr-grw-rotate');
-	matchingArr.splice(0);
+	matchingTestArr[0].classList.add('match');
+	matchingTestArr[1].classList.add('match');
+	matchingTestArr[0].classList.remove('open', 'show', 'hvr-grw-rotate');
+	matchingTestArr[1].classList.remove('open', 'show', 'hvr-grw-rotate');
+	matchedArr.push(matchingTestArr[0])
+	matchedArr.push(matchingTestArr[1])
+	matchingTestArr.splice(0);
+	if (matchedArr.length === 16) {
+		showModal();
+	}
 }
 
 //flips cards back over, clears array
 function matchFalse() {
-	matchingArr[0].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
-	matchingArr[1].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
-	matchingArr.splice(0);
+	matchingTestArr[0].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
+	matchingTestArr[1].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
+	matchingTestArr.splice(0);
+}
+
+/****************************
+ **********GAME WON**********
+ ****************************/
+
+let won = document.querySelector('div.modal');
+let wonDisplay = won.style.display;
+
+function showModal() {
+	won.style.display = 'block';
+	setTimeout(hideModal, 1000);
+}
+
+
+function hideModal() {
+	if (won.style.display = 'block') {
+		window.onclick = function(event) {
+			won.style.display = 'none';
+		} 
+
+	} else {
+		won.style.display = 'block'
+	}
 }
 
 
@@ -105,30 +135,28 @@ reset.addEventListener('click', function() {
 	for (i = 0; i < card.length; i++) {
 		card[i].classList.remove('match', 'open', 'show', 'disabled')
 	}
-	//removes event listener so first event 
-	//	listener can be added back on
-	reset.removeEventListener('click', function() {
-	for (i = 0; i < card.length; i++) {
-		card[i].classList.remove('match', 'open', 'show', 'disabled')
-	}
-	addEvent();
-	shuffle(shuffleArr);
-	});
+	resetArr();
 });
 
+function resetArr() {
+	matchingTestArr.splice(0);
+	//shuffle();
+	matchedArr.splice(0);
+	}
+
 // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(shuffleArr) {
-    let currentIndex = shuffleArr.length, temporaryValue, randomIndex;
+function shuffle(matchedArr) {
+    let currentIndex = matchedArr.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-        temporaryValue = shuffleArr[currentIndex];
-        shuffleArr[currentIndex] = shuffleArr[randomIndex];
-        shuffleArr[randomIndex] = temporaryValue;
+        temporaryValue = matchedArr[currentIndex];
+        matchedArr[currentIndex] = matchedArr[randomIndex];
+        matchedArr[randomIndex] = temporaryValue;
     }
 
-    return shuffleArr;
+    return matchedArr;
 }
 
 //card[4].querySelector('i').classList.value
