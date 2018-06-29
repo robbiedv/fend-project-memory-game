@@ -17,14 +17,20 @@
 
         <section class="score-panel">
         	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
+        		<li><i class=" star-one fa fa-star"></i></li>
+        		<li><i class="star-two fa fa-star"></i></li>
+        		<li><i class="star-three fa fa-star"></i></li>
+        		<li><i class="star-four fa fa-star"></i></li>
+        		<li><i class="star-five fa fa-star"></i></li>
         	</ul>
-
-        	<span class="moves"></span> Moves
+			
+       		<section class="score-panel">
+        		<span class="moves">0</span> <span class="moves-text">Moves</span>
+			</section>
+           	
+           	<section class="score-panel">
+            	<span class="minutes">00</span>:<span class="seconds">00</span> <span class="timer-text">Timer</span>
+			</section>
 
             <div class="restart">
         		<i class="fa fa-repeat"></i>
@@ -84,8 +90,7 @@
         <div id="memory-modal" class ="modal">
            	<div class="modal-content">
         		Nice Job! You remembered where every card was.<br>
-        		It took you<span class="moves"></span> moves and 
-        		<span class="time"></span> to solve the puzzle.<br>
+        		It took you <span class="total-moves"></span> moves to solve the puzzle.<br>
 						You earned:<br>
        		<ul class="stars-earned">
         	</ul>

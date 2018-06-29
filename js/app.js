@@ -1,47 +1,44 @@
 /**********BUGS**********
- * second card clicked does not flip
- *
- *
+ * matched cards are still pushing to array and logging to moves counter on click
+ * timer counter will not stop
+ * timer starts on reset button click
  *
  */
-
-/*
- * Create a list that holds all of your cards
- */
-
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
 
 
 /**************************************************
- **********FLIPS CARDS & CHECKS FOR MATCH**********
+ **********FLIP CARD & CHECK FOR MATCH**********
  **************************************************/
 
 let matchingTestArr = [];
 let matchedArr = [];
 let card = document.querySelectorAll('li.card');
+let robbie = document.querySelectorAll('li.card');
 const deck = document.querySelector('.deck')
+let won = document.querySelector('div.modal');
+const reset = document.querySelector('i.fa-repeat');
+
+//const test = document.querySelector('ul.deck li.card');
+
+
 document.addEventListener('DOMContentLoaded', addEvent);
 
 //adds eventlistener to every  card, pushes to array.
 function addEvent() {
-for (i = 0; i < card.length; i++) {
+for (let i = 0; i < card.length; i++) {
 	card[i].addEventListener('click', function() {
+		moveCounter();
 		matchingTestArr.push(this);
 		testArr();
+		removeStars();
 	});
-}
+  }
 }
 
 //checks array to see if index 0 and 1 are full.
 //if true, calls function to 'flip' cards.
 //last statement prevents more than 2 objects in array.
+//disables clicks from being logged to move counter
 function testArr() {
 if (matchingTestArr.length === 1) {
 	flipCardOne();
@@ -59,6 +56,7 @@ function flipCardOne() {
 //'flips' card by adding class 'open' and 'show' to card2
 function flipCardTwo() {
 	matchingTestArr[1].classList.add('open', 'show', 'disabled', 'hvr-grw-rotate');
+	disableAllCards();
 	compareCards();
 }
 
@@ -77,11 +75,12 @@ function compareCards() {
 function matchTrue() {
 	matchingTestArr[0].classList.add('match');
 	matchingTestArr[1].classList.add('match');
-	matchingTestArr[0].classList.remove('open', 'show', 'hvr-grw-rotate');
-	matchingTestArr[1].classList.remove('open', 'show', 'hvr-grw-rotate');
+	matchingTestArr[0].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
+	matchingTestArr[1].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
 	matchedArr.push(matchingTestArr[0])
 	matchedArr.push(matchingTestArr[1])
 	matchingTestArr.splice(0);
+	enableAllCards();
 	//Once all cards are matched, run the function to show modal
 	if (matchedArr.length === 16) {
 		showModal();
@@ -93,37 +92,151 @@ function matchFalse() {
 	matchingTestArr[0].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
 	matchingTestArr[1].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
 	matchingTestArr.splice(0);
+	enableAllCards();
 }
 
-/****************************
- **********GAME WON**********
- ****************************/
+function disableAllCards() {
+	for(let i = 0; i < robbie.length; i++) {
+		robbie[i].classList.add('disabled')
+	}
+}
 
-let won = document.querySelector('div.modal');
+function enableAllCards() {
+	for(let i = 0; i < robbie.length; i++) {
+		robbie[i].classList.remove('disabled')
+	}
+}
 
+/******************************************
+ **********TIME & MOVE COUNTERS**********
+ ******************************************/
+
+let minutes = document.querySelector('span.minutes');
+let seconds = document.querySelector('span.seconds');
+let total = 0;
+let moves = 1;
+
+//add event listener for clicks on cards 
+//logs clicks to variable moves
+function moveCounter() {
+for (let i = 0; i < card.length; i++) {
+	card[i].onclick = function () {
+		moves ++;
+		movesDisplay()
+	}
+  }
+}
+//converts variable moves number to string
+//updates span HTML
+function movesDisplay() {
+	movesString = moves.toString();
+	document.querySelector('span.moves').innerHTML = movesString;
+}
+//resets variable moves to = 0
+//resets moves display in game to 0
+function movesReset() {
+	moves = 1;
+	document.querySelector('span.moves').innerHTML = '0';
+}
+//starts timer on click
+//runs startTimer function only once
+document.addEventListener('click', startTimer, {once: true});
+
+//runs startTimer function every 1 second
+function startTimer() {
+	setInterval(setTime, 1000);
+	} 
+
+function setTime() {
+  total ++;
+  seconds.innerHTML = pad(total % 60);
+  minutes.innerHTML = pad(parseInt(total / 60));
+}
+
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+
+
+function timeReset() {
+	total = 0;
+	seconds.innerHTML = '00';
+	minutes.innerHTML = '00';
+}
+
+
+/************************************
+ **********GAME WON DISPLAY**********
+ ************************************/
+
+//shows modal when matchedArr length = 16 cards
 function showModal() {
 	won.style.display = 'block';
+	total = 0;
+	matchingTestArr.splice(0); //empties array
+	shuffleDeck(); 
+	matchedArr.splice(0); //empties array
+	totalMoves();
+	earnedStars();
+	setTimeout(timeReset, 1000);
+	setTimeout(movesReset, 1000);
 	setTimeout(hideModal, 1000);
 }
 
-
+//hides modal when user click outside box
 function hideModal() {
 	if (won.style.display = 'block') {
 		window.onclick = function(event) {
 			won.style.display = 'none';
-		} 
-
-	} else {
+		}
+		} else {
 		won.style.display = 'block'
+	}
+  }
+
+//removes stars based on number of moves
+function removeStars() {
+	let starFive = document.querySelector('i.star-five')
+	let starFour = document.querySelector('i.star-four')
+	let starThree =document.querySelector('i.star-three')
+	let starTwo = document.querySelector('i.star-two')
+	if (moves === 2) {
+		starFive.classList.add('fa-star-o');
+		starFive.classList.remove('fa-star');
+	} else if (moves === 25) {
+		starFour.classList.add('fa-star-o');
+		starFour.classList.remove('fa-star');
+	} else if (moves === 30) {
+		starThree.classList.add('fa-star-o');
+		starThree.classList.remove('fa-star');
+	} else if (moves === 35) {
+		starTwo.classList.add('fa-star-o');
+		starTwo.classList.remove('fa-star');
 	}
 }
 
+//display number of stars earned
+function earnedStars() {
+	let totalStars = document.querySelectorAll('.fa-star')
+	let displayStars = document.querySelector('ul.stars-earned');
+	displayStars.appendChild('totalStars');
+}
+
+//display number of moves taken to win
+function totalMoves() {
+	const movesDisplay = moves.toString();
+	document.querySelector('span.total-moves').innerHTML = movesDisplay;
+}
 
 /*************************************
  **********RESET AND SHUFFLE**********
  *************************************/
-
-const reset = document.querySelector('i.fa-repeat');
 
 //runs functions to reset game when reset button is clicked
 reset.onclick = function() {
@@ -134,6 +247,9 @@ function resetGame() {
 	matchingTestArr.splice(0); //empties array
 	shuffleDeck(); 
 	matchedArr.splice(0); //empties array
+	timeReset();
+	movesReset();
+	moveCounter();
 	}
 
 /* creates an array and stores in shuffleArr
@@ -147,11 +263,10 @@ function shuffleDeck() {
 		deck.appendChild(card);
 	}
 	//flips cards back over to starting position
-	for(i = 0; i < shuffleArr.length; i++) {
+	for(let i = 0; i < shuffleArr.length; i++) {
 		shuffleArr[i].classList.remove('match', 'open', 'show', 'disabled');
 	}
 }
-
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(shuffleArr) {
@@ -168,67 +283,6 @@ function shuffle(shuffleArr) {
     return shuffleArr;
 }
 
-//card[4].querySelector('i').classList.value
-
-
-/*
-//add event listener and 'flip' cards
-let card = document.querySelectorAll('li.card');
-let flippedCard = '';
-
-for (i = 0; i < card.length; i++) {
-	card[i].addEventListener('click', function() {
-		let clickedCard = this;
-		clickedCard.classList.add('open', 'show')
-		flippedCard += clickedCard.querySelector('i').value;
-		addToArr();
-	});
-}
-
-//add flipped cards to array
-function addToArr() {
-	matchingTestArr.push(flippedCard);
-	//convert();
-}
-
-let matchingTestArr = [];
-*/
-
-
-/*
-function convert() {
-	let test = matchingTestArr[0]
-	console.log(test.classList);
-}
-*/
-	
-/*
-// grab class names on <i> element
-function listClassNames () {
-let cardOne = matchingTestArr[0];
-let cardTwo = matchingTestArr[1];
-console.log(cardOne.firstChild);
-}
-*/
-	
-//compare class names. If true, add 'match' class to element.
-//if false, remove class 'open' and 'show' from <li> element.
-//remove both items from array.
-
-/*
-var cardOne = matchingTestArr[0].querySelector('i');
-var cardTwo = matchingTestArr[1].querySelector('i');
-
-function matchingTest () {
-	if (card1 === card2) {
-		card1.add('match');
-		card2.add('match');
-	} else {
-		card1.remove('open', 'show');
-		card2.remove('open', 'show');
-	}
-}
-*/
 
 /*
  * set up the event listener for a card. If a card is clicked:
