@@ -13,7 +13,7 @@
 let matchingTestArr = [];
 let matchedArr = [];
 let card = document.querySelectorAll('li.card');
-let robbie = document.querySelectorAll('li.card');
+let cardSetTwo = document.querySelectorAll('li.card');
 const deck = document.querySelector('.deck')
 let won = document.querySelector('div.modal');
 const reset = document.querySelector('i.fa-repeat');
@@ -97,14 +97,14 @@ function matchFalse() {
 }
 
 function disableAllCards() {
-	for(let i = 0; i < robbie.length; i++) {
-		robbie[i].classList.add('disabled')
+	for(let i = 0; i < cardSetTwo.length; i++) {
+		cardSetTwo[i].classList.add('disabled')
 	}
 }
 
 function enableAllCards() {
-	for(let i = 0; i < robbie.length; i++) {
-		robbie[i].classList.remove('disabled')
+	for(let i = 0; i < cardSetTwo.length; i++) {
+		cardSetTwo[i].classList.remove('disabled')
 	}
 }
 
@@ -120,8 +120,8 @@ let moves = 1;
 //add event listener for clicks on cards 
 //logs clicks to variable moves
 function moveCounter() {
-for (let i = 0; i < card.length; i++) {
-	card[i].onclick = function () {
+for (let i = 0; i < cardSetTwo.length; i++) {
+	cardSetTwo[i].onclick = function () {
 		moves ++;
 		movesDisplay()
 	}
