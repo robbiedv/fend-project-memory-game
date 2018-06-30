@@ -31,6 +31,7 @@ for (let i = 0; i < card.length; i++) {
 		matchingTestArr.push(this);
 		testArr();
 		removeStars();
+		earnedStars();
 	});
   }
 }
@@ -180,12 +181,12 @@ function showModal() {
 	won.style.display = 'block';
 	total = 0;
 	matchingTestArr.splice(0); //empties array
-	shuffleDeck(); 
+	//shuffleDeck(); 
 	matchedArr.splice(0); //empties array
 	totalMoves();
 	earnedStars();
-	setTimeout(timeReset, 1000);
-	setTimeout(movesReset, 1000);
+	//setTimeout(timeReset, 1000);
+	//setTimeout(movesReset, 1000);
 	setTimeout(hideModal, 1000);
 }
 
@@ -206,7 +207,7 @@ function removeStars() {
 	let starFour = document.querySelector('i.star-four')
 	let starThree =document.querySelector('i.star-three')
 	let starTwo = document.querySelector('i.star-two')
-	if (moves === 2) {
+	if (moves === 20) {
 		starFive.classList.add('fa-star-o');
 		starFive.classList.remove('fa-star');
 	} else if (moves === 25) {
@@ -221,12 +222,49 @@ function removeStars() {
 	}
 }
 
-//display number of stars earned
+//displays earned stars 
 function earnedStars() {
-	let totalStars = document.querySelectorAll('.fa-star')
-	let displayStars = document.querySelector('ul.stars-earned');
-	displayStars.appendChild('totalStars');
+	let earnedFive = document.querySelector('i.earned-five')
+	let earnedFour = document.querySelector('i.earned-four')
+	let earnedThree =document.querySelector('i.earned-three')
+	let earnedTwo = document.querySelector('i.earned-two')
+	if (moves === 20) {
+		earnedFive.classList.add('fa-star-o');
+		earnedFive.classList.remove('fa-star');
+	} else if (moves === 25) {
+		earnedFour.classList.add('fa-star-o');
+		earnedFour.classList.remove('fa-star');
+	} else if (moves === 30) {
+		earnedThree.classList.add('fa-star-o');
+		earnedThree.classList.remove('fa-star');
+	} else if (moves === 35) {
+		earnedTwo.classList.add('fa-star-o');
+		earnedTwo.classList.remove('fa-star');
+	}
 }
+
+//reset stars
+
+function resetStars() {
+	document.querySelector('i.earned-five').classList.remove('fa-star-o');
+	document.querySelector('i.earned-five').classList.add('fa-star')
+	document.querySelector('i.earned-four').classList.remove('fa-star-o');
+	document.querySelector('i.earned-four').classList.add('fa-star')
+	document.querySelector('i.earned-three').classList.remove('fa-star-o');
+	document.querySelector('i.earned-three').classList.add('fa-star')
+	document.querySelector('i.earned-two').classList.remove('fa-star-o');
+	document.querySelector('i.earned-two').classList.add('fa-star')
+	document.querySelector('i.star-five').classList.remove('fa-star-o');
+	document.querySelector('i.star-five').classList.add('fa-star');
+	document.querySelector('i.star-four').classList.remove('fa-star-o');
+	document.querySelector('i.star-four').classList.add('fa-star');
+	document.querySelector('i.star-three').classList.remove('fa-star-o');
+	document.querySelector('i.star-three').classList.add('fa-star');
+	document.querySelector('i.star-two').classList.remove('fa-star-o');
+	document.querySelector('i.star-two').classList.add('fa-star');
+	
+}
+
 
 //display number of moves taken to win
 function totalMoves() {
@@ -250,6 +288,7 @@ function resetGame() {
 	timeReset();
 	movesReset();
 	moveCounter();
+	resetStars();
 	}
 
 /* creates an array and stores in shuffleArr
