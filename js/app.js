@@ -17,9 +17,17 @@ let cardSetTwo = document.querySelectorAll('li.card');
 const deck = document.querySelector('.deck')
 let won = document.querySelector('div.modal');
 const reset = document.querySelector('i.fa-repeat');
+let clockId;
+let clockOn = false;
+const click = document.getElementById('deck-id')
 
-//const test = document.querySelector('ul.deck li.card');
 
+// listens for click to start timer
+if (clockOn === false) {
+click.addEventListener('click', startTimer);
+} else {
+	console.log("clock is already on");
+}
 
 document.addEventListener('DOMContentLoaded', addEvent);
 
@@ -115,18 +123,16 @@ function enableAllCards() {
 let minutes = document.querySelector('span.minutes');
 let seconds = document.querySelector('span.seconds');
 let total = 0;
-let moves = 1;
+let moves = 0;
 
 //add event listener for clicks on cards 
 //logs clicks to variable moves
 function moveCounter() {
-for (let i = 0; i < cardSetTwo.length; i++) {
-	cardSetTwo[i].onclick = function () {
+//for (let i = 0; i < cardSetTwo.length; i++) {
+//	cardSetTwo[i].onclick = function () {
 		moves ++;
 		movesDisplay()
 	}
-  }
-}
 //converts variable moves number to string
 //updates span HTML
 function movesDisplay() {
@@ -136,24 +142,31 @@ function movesDisplay() {
 //resets variable moves to = 0
 //resets moves display in game to 0
 function movesReset() {
-	moves = 1;
+	moves = 0;
 	document.querySelector('span.moves').innerHTML = '0';
 }
-//starts timer on click
-//runs startTimer function only once
-document.addEventListener('click', startTimer, {once: true});
 
-//runs startTimer function every 1 second
-function startTimer() {
-	setInterval(setTime, 1000);
-	} 
+
+function startTimer() { 
+	if (clockOn === false) {
+	clockId = setInterval(setTime, 1000);
+	}
+	clockOn = true;
+}
+
+function stopTimer() {
+	if (clockOn === true) {
+	clearInterval(clockId);
+	}
+}
+
+
 
 function setTime() {
   total ++;
   seconds.innerHTML = pad(total % 60);
   minutes.innerHTML = pad(parseInt(total / 60));
 }
-
 
 function pad(val) {
   var valString = val + "";
@@ -169,6 +182,7 @@ function timeReset() {
 	total = 0;
 	seconds.innerHTML = '00';
 	minutes.innerHTML = '00';
+	//clearInterval();
 }
 
 
@@ -179,14 +193,11 @@ function timeReset() {
 //shows modal when matchedArr length = 16 cards
 function showModal() {
 	won.style.display = 'block';
-	total = 0;
-	matchingTestArr.splice(0); //empties array
-	//shuffleDeck(); 
-	matchedArr.splice(0); //empties array
+	//total = 0;
+	timeReset();
+	stopTimer();
 	totalMoves();
 	earnedStars();
-	//setTimeout(timeReset, 1000);
-	//setTimeout(movesReset, 1000);
 	setTimeout(hideModal, 1000);
 }
 
@@ -195,6 +206,8 @@ function hideModal() {
 	if (won.style.display = 'block') {
 		window.onclick = function(event) {
 			won.style.display = 'none';
+		matchingTestArr.splice(0); //empties array 
+		matchedArr.splice(0); //empties array
 		}
 		} else {
 		won.style.display = 'block'
@@ -286,9 +299,10 @@ function resetGame() {
 	shuffleDeck(); 
 	matchedArr.splice(0); //empties array
 	timeReset();
+	stopTimer();
 	movesReset();
-	moveCounter();
 	resetStars();
+	clockOn = false;
 	}
 
 /* creates an array and stores in shuffleArr
