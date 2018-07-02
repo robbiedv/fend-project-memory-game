@@ -1,9 +1,7 @@
-/**********BUGS**********
- * matched cards are still pushing to array and logging to moves counter on click
- * timer counter will not stop
- * timer starts on reset button click
- *
- */
+
+//appended time to total time does not clear each string 
+//appended to it
+
 
 
 /**************************************************
@@ -146,7 +144,6 @@ function movesReset() {
 	document.querySelector('span.moves').innerHTML = '0';
 }
 
-
 function startTimer() { 
 	if (clockOn === false) {
 	clockId = setInterval(setTime, 1000);
@@ -159,8 +156,6 @@ function stopTimer() {
 	clearInterval(clockId);
 	}
 }
-
-
 
 function setTime() {
   total ++;
@@ -194,6 +189,7 @@ function timeReset() {
 function showModal() {
 	won.style.display = 'block';
 	//total = 0;
+	totalTime();
 	timeReset();
 	stopTimer();
 	totalMoves();
@@ -206,8 +202,6 @@ function hideModal() {
 	if (won.style.display = 'block') {
 		window.onclick = function(event) {
 			won.style.display = 'none';
-		matchingTestArr.splice(0); //empties array 
-		matchedArr.splice(0); //empties array
 		}
 		} else {
 		won.style.display = 'block'
@@ -285,6 +279,23 @@ function totalMoves() {
 	document.querySelector('span.total-moves').innerHTML = movesDisplay;
 }
 
+//display total time taken to win
+function totalTime() {
+	//let domMinutes = '';
+	//let domSeconds = '';
+	let totalMinutes = minutes.innerText;
+	let totalSeconds = seconds.innerText;
+	document.querySelector('.total-minutes').innerText = totalMinutes
+	document.querySelector('.total-seconds').innerText = totalSeconds
+}
+
+//yes button calls reset function
+let yesButton = document.querySelector('.yes-button');
+
+yesButton.onclick = function() {
+	resetGame();
+}
+
 /*************************************
  **********RESET AND SHUFFLE**********
  *************************************/
@@ -295,13 +306,14 @@ reset.onclick = function() {
 }
 
 function resetGame() {
-	matchingTestArr.splice(0); //empties array
 	shuffleDeck(); 
+	matchingTestArr.splice(0); //empties array
 	matchedArr.splice(0); //empties array
 	timeReset();
 	stopTimer();
 	movesReset();
 	resetStars();
+	//addEvent();
 	clockOn = false;
 	}
 
