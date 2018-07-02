@@ -57,12 +57,12 @@ if (matchingTestArr.length === 1) {
 }
 //'flips' card by adding class 'open' and 'show' to card1	
 function flipCardOne() {
-	matchingTestArr[0].classList.add('open', 'show', 'disabled', 'hvr-grw-rotate');
+	matchingTestArr[0].classList.add('open', 'show', 'disabled');
 }
 	
 //'flips' card by adding class 'open' and 'show' to card2
 function flipCardTwo() {
-	matchingTestArr[1].classList.add('open', 'show', 'disabled', 'hvr-grw-rotate');
+	matchingTestArr[1].classList.add('open', 'show', 'disabled');
 	disableAllCards();
 	compareCards();
 }
@@ -82,8 +82,8 @@ function compareCards() {
 function matchTrue() {
 	matchingTestArr[0].classList.add('match');
 	matchingTestArr[1].classList.add('match');
-	matchingTestArr[0].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
-	matchingTestArr[1].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
+	matchingTestArr[0].classList.remove('open', 'show', 'disabled');
+	matchingTestArr[1].classList.remove('open', 'show', 'disabled');
 	matchedArr.push(matchingTestArr[0])
 	matchedArr.push(matchingTestArr[1])
 	matchingTestArr.splice(0);
@@ -96,8 +96,8 @@ function matchTrue() {
 
 //flips cards back over, clears array
 function matchFalse() {
-	matchingTestArr[0].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
-	matchingTestArr[1].classList.remove('open', 'show', 'disabled', 'hvr-grw-rotate');
+	matchingTestArr[0].classList.remove('open', 'show', 'disabled');
+	matchingTestArr[1].classList.remove('open', 'show', 'disabled');
 	matchingTestArr.splice(0);
 	enableAllCards();
 }
