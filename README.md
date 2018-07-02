@@ -1,20 +1,31 @@
-# Memory Game Project
+# Memory Game
 
-## Table of Contents
+Udacity's Front-End Web Developer Project
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+## Where to Play
+You can play the Memory Game [HERE](https://codepen.io/robbiedv/pen/WympPO)
 
-## Instructions
+## How to Play
+The point of the game is to win. The way to win is by correctly matching each card with it's partner.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+## Game Instructions
 
-To get started, open `js/app.js` and start building out the app's functionality
+* Click on any one of the blue cards. This causes it to flip over, revealing a hidden image
+* Click a second card. If the images do not match, try to remember the images you've seen
+* If the images match, great job! You're one step closer to winning.
+* Continue clicking and matching cards until all are correctly matched
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+## Note to Player
 
-## Contributing
+If at anytime you feel the amount of moves and time you are using does not correctly display your 
+Memory Matching skills, feel free to reset the game by the replay button next to the timer.
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+## Aknowledgments
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+This game is dependant on
+
+	* [Bootstrap](https://getbootstrap.com/)
+	* [Google Fonts](https://fonts.google.com/)
+
+
+
