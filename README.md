@@ -24,8 +24,8 @@ Memory Matching skills, feel free to reset the game by the replay button next to
 
 This game is dependant on
 
-	*[Bootstrap](https://getbootstrap.com/)
-	*[Google Fonts](https://fonts.google.com/)
+* [Bootstrap](https://getbootstrap.com/)
+* [Google Fonts](https://fonts.google.com/)
 
 
 
