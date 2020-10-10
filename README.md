@@ -3,7 +3,7 @@
 Udacity's Front-End Web Developer Project
 
 ## Where to Play
-You can play the Memory Game [HERE](https://codepen.io/robbiedv/full/WympPO)
+You can play the Memory Game [HERE](https://robbiedv.github.io/memory-card-game/)
 
 ## How to Play
 The point of the game is to win. The way to win is by correctly matching each card with it's partner.
